@@ -1,0 +1,263 @@
+/*
+Copyright (c) 2021 Kil Hyung-jin, with Reserved Font Name Pretendard.
+https://github.com/orioncactus/pretendard
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+http://scripts.sil.org/OFL
+*/
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 900;
+  font-display: swap;
+  src: local('Pretendard Black'),
+       url(./woff2/Pretendard-Black.woff2) format('woff2'),
+       url(./woff/Pretendard-Black.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 800;
+  font-display: swap;
+  src: local('Pretendard ExtraBold'),
+       url(./woff2/Pretendard-ExtraBold.woff2) format('woff2'),
+       url(./woff/Pretendard-ExtraBold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-display: swap;
+  src: local('Pretendard Bold'),
+       url(./woff2/Pretendard-Bold.woff2) format('woff2'),
+       url(./woff/Pretendard-Bold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-display: swap;
+  src: local('Pretendard SemiBold'),
+       url(./woff2/Pretendard-SemiBold.woff2) format('woff2'),
+       url(./woff/Pretendard-SemiBold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-display: swap;
+  src: local('Pretendard Medium'),
+       url(./woff2/Pretendard-Medium.woff2) format('woff2'),
+       url(./woff/Pretendard-Medium.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-display: swap;
+  src: local('Pretendard Regular'),
+       url(./woff2/Pretendard-Regular.woff2) format('woff2'),
+       url(./woff/Pretendard-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 300;
+  font-display: swap;
+  src: local('Pretendard Light'),
+       url(./woff2/Pretendard-Light.woff2) format('woff2'),
+       url(./woff/Pretendard-Light.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 200;
+  font-display: swap;
+  src: local('Pretendard ExtraLight'),
+       url(./woff2/Pretendard-ExtraLight.woff2) format('woff2'),
+       url(./woff/Pretendard-ExtraLight.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 100;
+  font-display: swap;
+  src: local('Pretendard Thin'),
+       url(./woff2/Pretendard-Thin.woff2) format('woff2'),
+       url(./woff/Pretendard-Thin.woff) format('woff');
+}
+
+/* -------------------------------
+   Variables
+--------------------------------*/
+:root {
+  --main-color: #1b4dff;
+  --bg-light: #f9f9fb;
+  --text-dark: #111;
+  --text-gray: #333;
+}
+
+/* -------------------------------
+   Global
+--------------------------------*/
+html {
+  background-color: var(--bg-light);
+}
+
+body {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 1em; /* 19px */
+  font-weight: 400;
+  line-height: 1.68;
+  letter-spacing: 0.015em;
+  color: var(--text-gray);
+  max-width: 59em; /* 1120px / 19px */
+  margin: auto;
+  margin-top: 1.63em;  /* 31px */
+  margin-bottom: 1.63em;
+  box-shadow: 0 0.42em 1.26em rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border-radius: 1em; /* 약 19px */
+}
+
+/* -------------------------------
+   Headings
+--------------------------------*/
+h1 {
+  font-size: 3.53em; /* 67px / 19px */
+  line-height: 1.68;
+  font-weight: 800;
+  margin-top: 1.63em;
+  margin-bottom: 3.26em; /* 62px */
+  color: var(--main-color);
+}
+
+#however {
+  display: inline;
+  font-family: 'Pretendard';
+  font-size: 1em;
+  font-weight: 100;
+  line-height: 1.68;
+  letter-spacing: 0.015em;
+  color: var(--text-gray);
+}
+
+h2 {
+  font-size: 2.32em; /* 44px / 19px */
+  line-height: 1.68;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-top: 1.63em;
+  margin-bottom: 1.63em;
+  border-left: 0.32em solid var(--main-color); /* 6px */
+  padding-left: 0.74em; /* 14px */
+}
+
+h3 {
+  font-size: 1.53em; /* 29px / 19px */
+  line-height: 1.68;
+  font-weight: 700;
+  margin-top: 1.63em;
+  margin-bottom: 0;
+  color: var(--main-color);
+}
+
+h4, .h4 {
+  font-size: 1em;
+  line-height: 1.68;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-top: 1.63em;
+  margin-bottom: 0;
+}
+
+/* -------------------------------
+   Diary Section
+--------------------------------*/
+#diary {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+#diary > div {
+  background: #fff;
+  border: 0.05em solid #eee;
+  border-radius: 1em;
+  padding: 3.26em; /* 62px */
+  padding-bottom: 1.63em;
+  padding-top: 0;
+  box-shadow: 0 0.21em 0.53em rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 1.63em;
+}
+
+#diary h4 {
+  color: var(--main-color);
+  margin-bottom: 0.63em; /* 12px */
+  border-bottom: 0.11em solid var(--main-color); /* 2px */
+  display: inline-block;
+}
+
+#diary p {
+  margin-bottom: 0;
+}
+
+/* -------------------------------
+   Grid Container
+--------------------------------*/
+#grid {
+  max-width: 44.2em; /* 840px / 19px */
+  align-content: center;
+  padding: 7.37em; /* 140px / 19px */
+  padding-top: 4em; /* 76px / 19px */
+}
+
+/* -------------------------------
+   General Elements
+--------------------------------*/
+p, ul, ol, pre, table, blockquote {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+hr, .hr {
+  border: 0.05em solid;
+  margin: -0.05em 0;
+}
+
+a, b, i, strong, em, small, code {
+  line-height: 0;
+}
+
+sub, sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* -------------------------------
+   Responsive
+--------------------------------*/
+@media (max-width: 1205px) {
+  body {
+    margin-left: clamp(1em, 5vw, 5.26em);
+    margin-right: clamp(1em, 5vw, 5.26em);
+  }
+
+  #grid {
+    padding: clamp(0.84em, 10vw, 7.37em);
+  }
+}

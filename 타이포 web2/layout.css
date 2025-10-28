@@ -1,0 +1,67 @@
+:root{
+  --gap: 28px;
+  --max-w: 720px;
+  --accent: #0b66ff;
+}
+
+body {
+  font-family: system-ui, "Noto Sans KR", sans-serif;
+  margin:0; color:#111;
+  line-height:1.65;
+}
+
+.hero {
+  padding:80px 20px 40px;
+  text-align:center;
+  background:#f7f9ff;
+}
+
+.hero h1 {
+  font-size:36px;
+  margin:0 0 12px;
+}
+
+.sub {
+  font-size:18px; color:#444;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.container {
+  max-width: var(--max-w);
+  margin:0 auto;
+  padding:0 20px;
+}
+
+.content-block {
+  margin:60px 0;
+}
+
+.content-block h2 {
+  font-size:26px;
+  margin-bottom:var(--gap);
+}
+
+.highlight {
+  background:var(--accent);
+  color:white;
+  padding:20px;
+  margin-top:var(--gap);
+  border-radius:10px;
+  font-weight:600;
+}
+
+.footer {
+  text-align:center;
+  padding:40px 20px;
+  color:#777;
+  background:#fafafa;
+}
+
+/* 반응형 */
+@media (max-width:600px){
+  .hero h1 {font-size:30px}
+  .content-block h2 {font-size:22px}
+}
