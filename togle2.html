@@ -1,0 +1,370 @@
+<style>
+/* ---------- diary toggle (details/summary) ---------- */
+
+/* 카드 컨테이너: 기존 #diary > div 스타일을 대체/보완 */
+#diary {
+  display: grid;
+  grid-template-columns: 1fr; /* 필요시 칼럼 늘리기 가능 */
+  gap: 24px;
+}
+
+/* 기존 카드 디자인을 유지하도록 .diary-card 를 사용 */
+.diary-card {
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: 19px;
+  padding: 24px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  transition: box-shadow 0.2s ease, transform 0.18s ease;
+}
+
+/* h4 (이름) 스타일 유지 */
+.diary-card > h4 {
+  margin-bottom: 12px;
+}
+
+/* details 기본 리셋 */
+.diary-card details {
+  width: 100%;
+}
+
+/* summary를 '첫 문장'으로 보여주기 — 보이게 하고 마커 숨김 */
+.diary-card summary {
+  display: block;
+  cursor: pointer;
+  list-style: none;
+  outline: none;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  padding-right: 36px; /* 아이콘 공간 */
+  margin-bottom: 6px;
+}
+
+/* 브라우저 기본 마커 숨기기 */
+.diary-card summary::-webkit-details-marker {
+  display: none;
+}
+.diary-card summary::marker {
+  content: none;
+}
+
+/* custom plus/minus icon */
+.diary-card summary::after {
+  content: "＋";
+  position: absolute;
+  right: 28px;
+  font-weight: 700;
+  color: var(--main-color);
+  transition: transform 0.18s ease, content 0.18s ease;
+}
+
+/* entry content (나머지 본문) — 접힘 상태 */
+.diary-card .entry-content {
+  max-height: 3.6em; /* 대략 첫 문장 2줄 정도 보이게 조절 가능 */
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.36s ease;
+  padding-right: 8px;
+}
+
+/* 페이드 아웃 그림자(더 있음 표시) */
+.diary-card .entry-content::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.2em;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* opened 상태: 전체 펼치기 */
+.diary-card details[open] .entry-content {
+  max-height: 1000px; /* 충분히 큰 값으로 전체 확장 */
+}
+
+/* opened 상태에서 fade 제거 */
+.diary-card details[open] .entry-content::after {
+  opacity: 0;
+  display: none;
+}
+
+/* opened 상태에서 아이콘 변경(−) */
+.diary-card details[open] summary::after {
+  content: "−";
+}
+
+/* hover / focus 시 시각적 피드백 */
+.diary-card summary:hover,
+.diary-card summary:focus {
+  color: var(--main-color);
+}
+
+/* 카드 hover 효과 */
+.diary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+/* summary 위치 안정화: summary::after 는 절대 위치라 summary를 상대 위치로 만듦 */
+.diary-card summary {
+  position: relative;
+}
+
+/* summary가 길어질 때 줄바꿈 보장 */
+.diary-card summary {
+  white-space: normal;
+}
+
+/* entry-content 내부 문단 간격 */
+.diary-card .entry-content p {
+  margin: 8px 0;
+}
+
+/* 반응형 보완 (원본 스타일과 함께 사용) */
+@media (max-width: 600px) {
+  .diary-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .diary-card .entry-content {
+    max-height: 4.2em;
+  }
+}
+
+
+</style>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>일기 토글 테스트</title>
+  <style>
+    :root {
+      --main-color: #c65bff;
+      --text-dark: #333;
+    }
+
+    body {
+      font-family: "Pretendard", sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 40px;
+      color: var(--text-dark);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+    }
+
+    /* ---------- diary section ---------- */
+    #diary {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .diary-card {
+      background: #fff;
+      border: 2px solid #eee;
+      border-radius: 19px;
+      padding: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+      transition: box-shadow 0.2s ease, transform 0.18s ease;
+    }
+
+    .diary-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .diary-card > h4 {
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .diary-card h4 img {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .diary-card details {
+      width: 100%;
+    }
+
+    /* summary (첫 문장) */
+    .diary-card summary {
+      display: block;
+      cursor: pointer;
+      list-style: none;
+      outline: none;
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-dark);
+      padding-right: 36px;
+      margin-bottom: 6px;
+      position: relative;
+      white-space: normal;
+    }
+
+    .diary-card summary::-webkit-details-marker {
+      display: none;
+    }
+    .diary-card summary::marker {
+      content: none;
+    }
+
+    /* + / - 아이콘 */
+    .diary-card summary::after {
+      content: "＋";
+      position: absolute;
+      right: 8px;
+      top: 0;
+      font-weight: 700;
+      color: var(--main-color);
+      transition: transform 0.18s ease, content 0.18s ease;
+    }
+
+    .diary-card details[open] summary::after {
+      content: "−";
+    }
+
+    /* 본문 */
+    .diary-card .entry-content {
+      max-height: 3.6em;
+      overflow: hidden;
+      position: relative;
+      transition: max-height 0.36s ease;
+      padding-right: 8px;
+    }
+
+    .diary-card .entry-content::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1.2em;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .diary-card details[open] .entry-content {
+      max-height: 1000px;
+    }
+
+    .diary-card details[open] .entry-content::after {
+      opacity: 0;
+      display: none;
+    }
+
+    .diary-card .entry-content p {
+      margin: 8px 0;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+      .diary-card {
+        padding: 18px;
+        border-radius: 14px;
+      }
+      .diary-card .entry-content {
+        max-height: 4.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>📖 오늘의 일기</h1>
+
+  <div id="diary">
+
+    <div id="범씨" class="diary-card">
+      <h4><img src="basic.jpeg" alt="">범씨</h4>
+      <details>
+        <summary>오늘은 평소보다 조금 일찍 눈을 떴다. 창문 틈 사이로 들어오는 햇살이 유난히 부드러워서, 잠시 그대로 누워 아침 공기를 느꼈다.</summary>
+        <div class="entry-content">
+          <p>따뜻한 차 한 잔으로 하루를 시작하고, 간단히 스트레칭을 하며 몸을 깨웠다. 정신이 맑아지자 자연스럽게 오늘 해야 할 일들이 떠올랐다. 하루의 첫 순간을 차분히 맞이하니, 마음도 괜히 한결 가벼워졌다.</p>
+          <p>오전에는 카페에 들러 노트북을 펴고 해야 할 과제와 작업들을 정리했다. 집중이 잘 되는 날은 드물지만, 오늘은 커피 향 덕분인지 생각보다 일이 잘 풀렸다. 잔잔한 음악과 함께 커서가 움직이는 리듬이 묘하게 마음을 안정시켰다.</p>
+          <p>점심은 가까운 식당에서 간단히 해결하고, 오후엔 산책을 했다. 선선한 바람이 불어와 머릿속이 한결 정리되는 기분이었다.</p>
+          <p>저녁에는 집으로 돌아와 조용히 음악을 들으며 하루를 마무리했다.</p>
+        </div>
+      </details>
+    </div>
+
+    <div id="레01" class="diary-card">
+      <h4><img src="basic.jpeg" alt="">레01</h4>
+      <details>
+        <summary>아침. 창문 틈으로 스며드는 빛이 차갑지만 맑다.</summary>
+        <div class="entry-content">
+          <p>손끝에 닿는 머그잔의 온기가 천천히 몸속으로 스며들며, 숨을 고르게 만든다.</p>
+          <p>밖에서는 바람이 스쳐 지나가지만, 내 방 안은 고요하다.</p>
+          <p>책장을 넘기며 낡은 문장을 만지작거린다. 오래된 생각이 새로워진다.</p>
+        </div>
+      </details>
+    </div>
+
+    <div id="나나" class="diary-card">
+      <h4><img src="basic.jpeg" alt="">나나</h4>
+      <details>
+        <summary>오늘은 이상하게 아침부터 설레는 기분이었어.</summary>
+        <div class="entry-content">
+          <p>별일도 없는데 괜히 머리 감으면서 노래를 흥얼거리고, 토스트에 딸기잼을 두 번이나 발랐지!</p>
+          <p>오늘은 세상이 조금 더 반짝이는 것 같아. 이런 날은 그냥 아무 이유 없이 좋다.</p>
+        </div>
+      </details>
+    </div>
+
+    <div id="니토니토니" class="diary-card">
+      <h4><img src="tony.jpeg" alt="">니토니토니</h4>
+      <details>
+        <summary>아침에 일어나서 거울을 봤다. (상태 나쁘지 않다. 오히려 좀 멋있다.)</summary>
+        <div class="entry-content">
+          <p>커피 두 잔으로 부팅 완료. 첫 잔은 그냥 프리뷰였다.</p>
+          <p>휴식이 생산의 일부라지만, 그건 내겐 오류 메시지다. 난 멈추면 다운된다.</p>
+        </div>
+      </details>
+    </div>
+
+    <div id="바키" class="diary-card">
+      <h4><img src="basic.jpeg" alt="">바키</h4>
+      <details>
+        <summary>오늘 몸이 미쳤다. 아침부터 손이 근질거리고 심장이 터질 듯 뛰었다.</summary>
+        <div class="entry-content">
+          <p>도장 문을 열자마자 상대가 웃었다. “오늘은 내 차례인가?” 같은 표정.</p>
+          <p>웃기지, 내 속도에 맞춰 달리는 주먹 앞에 그 웃음이 무슨 의미가 있겠나.</p>
+        </div>
+      </details>
+    </div>
+
+    <div id="나봉이" class="diary-card">
+      <h4><img src="nabong.jpeg" alt="">나봉이</h4>
+      <details>
+        <summary>아침에 눈을 떴는데, 햇살이 진짜 말도 안 되게 예뻤당..</summary>
+        <div class="entry-content">
+          <p>커튼 틈 사이로 들어오는 조용한 빛이 방 안을 살살 덮는데, 그 순간 괜히 멍— 하게 서 있었당!</p>
+        </div>
+      </details>
+    </div>
+
+  </div>
+</body>
+</html>
+
